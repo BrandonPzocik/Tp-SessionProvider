@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState } from "react";
 
 // Exporta el contexto
 export const SessionContext = createContext();
@@ -43,9 +43,4 @@ export const SessionProvider = ({ children }) => {
       {children}
     </SessionContext.Provider>
   );
-};
-
-// Hook para usar el contexto de sesión
-export const useSession = () => {
-  return useContext(SessionContext);
 };
