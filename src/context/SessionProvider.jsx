@@ -6,6 +6,7 @@ export const SessionContext = createContext();
 export const SessionProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState(null);
+  const [username, setUsername] = useState(null); // Asegúrate de definir `username` en el estado
 
   const login = async (username, password) => {
     try {
@@ -18,6 +19,7 @@ export const SessionProvider = ({ children }) => {
         const data = await response.json();
         setToken(data.token);
         setIsAuthenticated(true);
+        setUsername(username); // Guarda el username en el estado
         return { success: true };
       } else {
         return { success: false, message: "Credenciales incorrectas" };
@@ -31,10 +33,13 @@ export const SessionProvider = ({ children }) => {
   const logout = () => {
     setIsAuthenticated(false);
     setToken(null);
+    setUsername(null); // Limpia el username al cerrar sesión
   };
 
   return (
-    <SessionContext.Provider value={{ isAuthenticated, login, logout, token }}>
+    <SessionContext.Provider
+      value={{ isAuthenticated, login, logout, token, username }}
+    >
       {children}
     </SessionContext.Provider>
   );
